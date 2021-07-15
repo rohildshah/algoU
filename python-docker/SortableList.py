@@ -1,7 +1,7 @@
 class SortableList():
-    def __init__(self):
+    def __init__(self, data):
         self.swaps = []
-        self.data = [1, 2, 3, 4, 5]
+        self.data = data
 
 
     def swap(self, i1, i2):
