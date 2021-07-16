@@ -1,7 +1,6 @@
 import React from "react";
 import CodeEditor from "./CodeEditor.js"
 import Animation from "./Animation.js"
-import AceEditor from "react-ace";
 
 class App extends React.Component {
     constructor() {
@@ -13,8 +12,6 @@ class App extends React.Component {
     }
 
     handleResponse(data) {
-        console.log(data)
-        // const newValue = this.state.value + "\n" + data
         const newValue = data
         this.setState({
             value: newValue
@@ -26,7 +23,6 @@ class App extends React.Component {
             <div className="d-flex flex-wrap justify-content-center align-content-center align-items-center w-100 h-100 position-absolute">
                 <CodeEditor onResponse={this.handleResponse}/>
                 <Animation value={this.state.value}/>
-                {/* <AceEditor /> */}
             </div>
         );
     }
