@@ -1,5 +1,5 @@
 {
-  "name": "algo-learning-game",
+  "name": "algoU",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rohildshah/algo-learning-game.git"
+    "url": "git+https://github.com/rohildshah/algoU.git"
   },
   "author": "Rohil Shah",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rohildshah/algo-learning-game/issues"
+    "url": "https://github.com/rohildshah/algoU/issues"
   },
-  "homepage": "https://github.com/rohildshah/algo-learning-game#readme",
+  "homepage": "https://github.com/rohildshah/algoU#readme",
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",

@@ -1,4 +1,4 @@
-# algo-learning-game
+# algoU
 
 A web app to teach users algorithms through a game-like interface.
 
