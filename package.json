@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "execute": "python execution-server/app.py",
-    "build": "webpack --mode development"
+    "build": "webpack --mode development && ./build.sh"
   },
   "repository": {
     "type": "git",
