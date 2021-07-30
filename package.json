@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "execute": "python execution-server/app.py",
+    "devServer": "webpack-dev-server --mode development",
+    "backend": "python execution-server/app.py",
     "build": "webpack --mode development && ./build.sh"
   },
   "repository": {
