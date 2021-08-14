@@ -1,5 +1,5 @@
 from SortableList import SortableList
-from code import bubbleSort
+from my_code import bubbleSort
 
 arr = SortableList([64, 34, 25, 12, 22, 11, 90])
 bubbleSort(arr)

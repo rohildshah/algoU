@@ -7,8 +7,10 @@ class ControlPanel extends React.Component {
 
     render() {
         return (
-            <div className="w-100 d-flex justify-content-center p-3">
-                <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#levelSelect">Level Select</button>
+            <div className="d-flex flex-row pb-3">
+                <button type="button" className="btn btn-primary d-flex align-items-center mr-2" data-toggle="modal" data-target="#levelSelect" style={{lineHeight: '20px'}}>
+                    <i className="bi bi-grid-3x3-gap-fill"></i>
+                </button>
 
                 <div className="modal fade" id="levelSelect" tabIndex="-1" role="dialog" aria-labelledby="levelSelectTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
@@ -34,9 +36,22 @@ class ControlPanel extends React.Component {
                     </div>
                 </div>
 
-                <button type="button" className="btn btn-primary btn-sm" onClick={() => {
+                <button type="button" className="btn btn-primary d-flex align-items-center mr-2" style={{lineHeight: '20px', padding: '3px 8px 3px 9px'}} onClick={() => {
                     this.props.executeCode()
-                }}>Execute Code</button>
+                }}>
+                    <i className="bi bi-play-fill" style={{fontSize: '23px'}}></i>
+                </button>
+
+                <button type="button" className="btn btn-primary d-flex align-items-center mr-2" style={{lineHeight: '20px'}} onClick={() => {
+                    this.props.postToCode()
+                }}>
+                    <i className="bi bi-bookmark-fill"></i>
+                </button>
+
+                <button type="button" className="btn btn-primary d-flex align-items-center mr-2" style={{lineHeight: '20px'}}>
+                    <i className="bi bi-gear-fill"></i>
+                </button>
+
             </div>
         )
     }

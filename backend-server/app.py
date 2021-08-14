@@ -57,24 +57,14 @@ def execute():
     uuid, id = request.args.to_dict().values()
     code = _execute(query, (uuid, id))
 
-    print(code)
-
-    f = open("python-docker/code.py", "w")
+    f = open("my_code.py", "w")
     f.write(code[1][0][0])
     f.close()
 
+    stream = subprocess.run("docker run -v $PWD/my_code.py:/app/my_code.py --rm python-docker", capture_output=True, shell=True)
+    result = stream.stdout if stream.returncode == 0 else stream.stderr
 
-    process = subprocess.Popen('docker rmi python-docker', shell=True, stdout=subprocess.PIPE)
-    process.wait()
-    process = subprocess.Popen('docker build --tag python-docker ./python-docker', shell=True, stdout=subprocess.PIPE)
-    process.wait()
-
-    result = os.popen('docker run --rm python-docker').read()
-    print(result)
-
-    # result = os.popen('docker run --rm python-docker -c \'%s\'' % code).read()
-
-    return make_response({ 'result': result }, 200)
+    return make_response({ 'result': result.decode('utf-8') }, 200)
 
 @app.route('/levels', methods=['GET'])
 def levels():

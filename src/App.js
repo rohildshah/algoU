@@ -7,18 +7,18 @@ import { v4 as uuidv4 } from "uuid"
 class App extends React.Component {
     constructor() {
         super();
+        this.postToCode = this.postToCode.bind(this)
         this.executeCode = this.executeCode.bind(this)
         this.onCodeChange = this.onCodeChange.bind(this)
         this.onLevelChange = this.onLevelChange.bind(this)
         this.state = {
             code: "",
-            level: 1,
-            // level to -1 to avoid code deletion
+            level: -1,
             view: "",
         }
     }
 
-    executeCode() {
+    postToCode() {
         fetch('http://192.168.1.72:5000/code', {
             method: 'POST',
             body: JSON.stringify({
@@ -30,8 +30,25 @@ class App extends React.Component {
         .catch((error) => {
             console.log('Error:', error);
         })
+    }
 
-        fetch('http://192.168.1.72:5000/execute?uuid='+localStorage.getItem('uuid')+'&level='+this.state.level, {
+    postToProgress(level) {
+        fetch('http://192.168.1.72:5000/progress', {
+            method: 'POST',
+            body: JSON.stringify({
+                uuid: localStorage.getItem('uuid'),
+                level: level
+            })
+        })
+        .catch((error) => {
+            console.log('Error:', error);
+        })
+    }
+
+    async executeCode() {
+        await this.postToCode()
+
+        await fetch('http://192.168.1.72:5000/execute?uuid='+localStorage.getItem('uuid')+'&level='+this.state.level, {
             method: 'GET',
         })
         .then(response => response.json())
@@ -56,29 +73,11 @@ class App extends React.Component {
     }
 
     onLevelChange(level) {
-        fetch('http://192.168.1.72:5000/code', {
-            method: 'POST',
-            body: JSON.stringify({
-                uuid: localStorage.getItem('uuid'),
-                level: this.state.level,
-                last_code: this.state.code,
-            })
-        })
-        .catch((error) => {
-            console.log('Error:', error);
-        })
+        this.postToCode()
 
         this.setState({level: level})
-        fetch('http://192.168.1.72:5000/progress', {
-            method: 'POST',
-            body: JSON.stringify({
-                uuid: localStorage.getItem('uuid'),
-                level: level
-            })
-        })
-        .catch((error) => {
-            console.log('Error:', error);
-        })
+
+        this.postToProgress(level)
 
         fetch('http://192.168.1.72:5000/code?uuid='+localStorage.getItem('uuid')+'&level='+level, {
             method: 'GET',
@@ -96,16 +95,7 @@ class App extends React.Component {
         if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', uuidv4())
 
-            fetch('http://192.168.1.72:5000/progress', {
-                method: 'POST',
-                body: JSON.stringify({
-                    uuid: localStorage.getItem('uuid'),
-                    level: 1
-                })
-            })
-            .catch((error) => {
-                console.log('Error:', error);
-            })
+            this.postToProgress(1)
         } else {
             fetch('http://192.168.1.72:5000/progress?uuid=' + localStorage.getItem('uuid'), {
                 method: 'GET',
@@ -136,20 +126,23 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="d-flex flex-wrap justify-content-center align-content-center align-items-center w-100 h-100 position-absolute">
-                <div className="w-50 h-100">
-                    <ControlPanel 
-                        onLevelChange={this.onLevelChange}
-                        executeCode={this.executeCode} />
-                    <CodeEditor
-                        level={this.state.level}
-                        code={this.state.code}
-                        onLevelChange={this.onLevelChange}
-                        onCodeChange={this.onCodeChange}
-                        onResponse={this.handleResponse} />
+            // d-flex flex-wrap justify-content-center align-content-center align-items-center w-100 h-100 position-absolute
+            <div className="container-xxl p-3">                
+                <div className="row h-100">
+                    <div className="col-6">
+                        <ControlPanel 
+                            onLevelChange={this.onLevelChange}
+                            executeCode={this.executeCode} 
+                            postToCode={this.postToCode}/>
+                        <CodeEditor
+                            code={this.state.code}
+                            onCodeChange={this.onCodeChange} />
+                    </div>
+                    <div className="col-6">
+                        <Animation level={this.state.view}/>
+                    </div>
                 </div>
                 
-                <Animation level={this.state.view}/>
             </div>
         );
     }
