@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "execute": "python execution-server/app.py",
+    "devServer": "webpack serve --mode development",
+    "backend": "python backend-server/app.py",
     "build": "webpack --mode development && ./build.sh"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "ace-builds": "^1.4.12",
@@ -30,6 +31,7 @@
     "react-ace": "^9.4.1",
     "react-dom": "^17.0.2",
     "style-loader": "^3.1.0",
+    "uuid": "^3.4.0",
     "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
