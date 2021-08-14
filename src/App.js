@@ -1,8 +1,9 @@
 import React from "react";
 import ControlPanel from "./ControlPanel.js"
+import AceEditor from "react-ace";
+import ErrorBox from "./ErrorBox.js"
 import Animation from "./Animation.js"
 import { v4 as uuidv4 } from "uuid"
-import AceEditor from "react-ace";
 import 'ace-builds/src-noconflict/mode-python'
 import 'ace-builds/src-noconflict/theme-github'
 import "ace-builds/src-min-noconflict/ext-language_tools";
@@ -17,7 +18,7 @@ class App extends React.Component {
         this.state = {
             code: "",
             level: -1,
-            view: "",
+            stdout: "",
         }
     }
 
@@ -59,15 +60,30 @@ class App extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            this.onViewChange(data['result'])
+            const date = new Date();
+            const h = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            const m = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            const s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            const time = `[${h}:${m}:${s}] `;
+
+            const returncode = data['returncode']
+            const stdout = data['stdout']
+            const stderr = data['stderr'].split("\n")
+
+            if (stderr.length != 1) {
+                this.onStdoutChange(time + stderr[stderr.length - 2])    
+            }
+            if (stdout != "") {
+                console.log(time + stdout)
+            }
         })
         .catch((error) => {
             console.log('Error:', error);
         })
     }
 
-    onViewChange(view) {
-        this.setState({view: view})
+    onStdoutChange(stdout) {
+        this.setState({stdout: this.state.stdout == "" ? stdout : this.state.stdout + "\n" + stdout})
     }
 
     onCodeChange(code) {
@@ -114,13 +130,13 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="container-xxl p-3">                
+            <div className="container-xxl h-100 p-3">                
                 <div className="row h-100">
                     <div className="col-6">
-                        <ControlPanel 
+                        <ControlPanel
                             onLevelChange={this.onLevelChange}
                             executeCode={this.executeCode} 
-                            postToCode={this.postToCode}/>
+                            postToCode={this.postToCode} />
                         <AceEditor
                             mode="python"
                             theme="github"
@@ -130,10 +146,13 @@ class App extends React.Component {
                             onChange={this.onCodeChange}
                             value={this.state.code}
                             className="w-100"
-                        />
+                            style={{height: '68%'}} />
+                        
+                        <ErrorBox 
+                            stdout={this.state.stdout} />
                     </div>
                     <div className="col-6">
-                        <Animation level={this.state.view}/>
+                        <Animation />
                     </div>
                 </div>
                 

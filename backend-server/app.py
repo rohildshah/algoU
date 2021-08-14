@@ -69,7 +69,11 @@ def execute():
     stream = subprocess.run("docker run -v $PWD/my_code.py:/app/my_code.py --rm python-docker", capture_output=True, shell=True)
     result = stream.stdout if stream.returncode == 0 else stream.stderr
 
-    return make_response({ 'result': result.decode('utf-8') }, 200)
+    return make_response({
+        'returncode': stream.returncode,
+        'stdout': stream.stdout.decode('utf-8'),
+        'stderr': stream.stderr.decode('utf-8'),
+    }, 200)
 
 @app.route('/levels', methods=['GET'])
 def levels():
