@@ -113,7 +113,7 @@ class App extends React.Component {
         if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', uuidv4())
 
-            this.postToProgress(1)
+            this.onLevelChange(1)
         } else {
             fetch('http://192.168.1.72:5000/progress?uuid=' + localStorage.getItem('uuid'), {
                 method: 'GET',
