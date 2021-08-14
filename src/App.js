@@ -1,8 +1,11 @@
 import React from "react";
 import ControlPanel from "./ControlPanel.js"
-import CodeEditor from "./CodeEditor.js"
 import Animation from "./Animation.js"
 import { v4 as uuidv4 } from "uuid"
+import AceEditor from "react-ace";
+import 'ace-builds/src-noconflict/mode-python'
+import 'ace-builds/src-noconflict/theme-github'
+import "ace-builds/src-min-noconflict/ext-language_tools";
 
 class App extends React.Component {
     constructor() {
@@ -45,19 +48,18 @@ class App extends React.Component {
         })
     }
 
-    async executeCode() {
-        await this.postToCode()
-
-        await fetch('http://192.168.1.72:5000/execute?uuid='+localStorage.getItem('uuid')+'&level='+this.state.level, {
-            method: 'GET',
+    executeCode() {
+        fetch('http://192.168.1.72:5000/execute', {
+            method: 'POST',
+            body: JSON.stringify({
+                uuid: localStorage.getItem('uuid'),
+                level: this.state.level,
+                code: this.state.code
+            })
         })
         .then(response => response.json())
         .then(data => {
             this.onViewChange(data['result'])
-            console.log(data)
-            console.log(data['result'])
-            console.log(typeof(data['result']))
-            console.log(this.state.view)
         })
         .catch((error) => {
             console.log('Error:', error);
@@ -108,25 +110,10 @@ class App extends React.Component {
                 console.log('Error:', error);
             });
         }
-
-        // ev.preventDefault()
-        // fetch('http://192.168.1.72:5000/code', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         uuid: localStorage.getItem('uuid'),
-        //         level: this.state.level,
-        //         last_code: this.state.code,
-        //     })
-        // })
-        // .catch((error) => {
-        //     console.log('Error:', error);
-        // })
-        // return ev.returnValue = 'Are you sure you want to close?';
     }
 
     render() {
         return (
-            // d-flex flex-wrap justify-content-center align-content-center align-items-center w-100 h-100 position-absolute
             <div className="container-xxl p-3">                
                 <div className="row h-100">
                     <div className="col-6">
@@ -134,9 +121,16 @@ class App extends React.Component {
                             onLevelChange={this.onLevelChange}
                             executeCode={this.executeCode} 
                             postToCode={this.postToCode}/>
-                        <CodeEditor
-                            code={this.state.code}
-                            onCodeChange={this.onCodeChange} />
+                        <AceEditor
+                            mode="python"
+                            theme="github"
+                            showPrintMargin={false}
+                            highlightActiveLine={false}
+                            enableLiveAutocompletion={true}
+                            onChange={this.onCodeChange}
+                            value={this.state.code}
+                            className="w-100"
+                        />
                     </div>
                     <div className="col-6">
                         <Animation level={this.state.view}/>

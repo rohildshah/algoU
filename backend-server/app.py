@@ -46,19 +46,24 @@ def _execute(query, query_parameters):
     
     return response
 
-@app.route('/execute', methods=['GET'])
+@app.route('/execute', methods=['POST'])
 def execute():
     @after_this_request
     def add_header(response):
         response.headers['Access-Control-Allow-Origin'] = '*'
         return response
 
-    query = "select last_code from code where uuid=%s and level=%s"
-    uuid, id = request.args.to_dict().values()
-    code = _execute(query, (uuid, id))
+    uuid, level, code = json.loads(request.data).values()
+
+    query = "insert into code (uuid, level, last_code) "
+    query += "values (%s, %s, %s) "
+    query += "on conflict (uuid, level) do "
+    query += "update set last_code=excluded.last_code;"
+
+    _execute(query, (uuid, level, code))
 
     f = open("my_code.py", "w")
-    f.write(code[1][0][0])
+    f.write(code)
     f.close()
 
     stream = subprocess.run("docker run -v $PWD/my_code.py:/app/my_code.py --rm python-docker", capture_output=True, shell=True)
