@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devServer": "webpack serve --mode development",
+    "serve": "webpack serve --mode development",
     "backend": "python backend-server/app.py",
     "build": "webpack --mode development && ./build.sh"
   },
