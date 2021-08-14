@@ -84,7 +84,7 @@ class App extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            this.onCodeChange(data['code'])
+            this.onCodeChange(data['code'].replaceAll('\\n', '\n'))
         })
         .catch((error) => {
             console.log('Error:', error);
