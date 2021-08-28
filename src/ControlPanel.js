@@ -15,22 +15,30 @@ class ControlPanel extends React.Component {
                 <div className="modal fade" id="levelSelect" tabIndex="-1" role="dialog" aria-labelledby="levelSelectTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Select a Level</h5>
+                            <div className="modal-header text-center">
+                                <h5 className="modal-title w-100">Select a Level</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div className="modal-body">
-                                <button type="button" className="btn btn-primary" data-dismiss="modal" value="1" onClick={(event) => {
-                                    this.props.onLevelChange(event.target.value)
-                                }}>Level 1</button>
-                                <button type="button" className="btn btn-primary" data-dismiss="modal" value="2" onClick={(event) => {
-                                    this.props.onLevelChange(event.target.value)
-                                }}>Level 2</button>
-                                <button type="button" className="btn btn-primary" data-dismiss="modal" value="3" onClick={(event) => {
-                                    this.props.onLevelChange(event.target.value)
-                                }}>Level 3</button>
+                            <div className="modal-body text-center">
+                                <div className="pb-2">
+                                    <button type="button" className="btn btn-primary mr-2" data-dismiss="modal" value="1" onClick={(event) => {
+                                        this.props.onLevelChange(event.target.value)
+                                    }}>Sorting #1</button>
+                                    <button type="button" className="btn btn-primary mr-2" data-dismiss="modal" value="2" onClick={(event) => {
+                                        this.props.onLevelChange(event.target.value)
+                                    }}>Sorting #2</button>
+                                    <button type="button" className="btn btn-primary mr-2" data-dismiss="modal" value="3" onClick={(event) => {
+                                        this.props.onLevelChange(event.target.value)
+                                    }}>Sorting #3</button>
+                                    <button type="button" className="btn btn-primary mr-2" data-dismiss="modal" value="4" onClick={(event) => {
+                                        this.props.onLevelChange(event.target.value)
+                                    }}>Sorting #4</button>
+                                </div>
+                                <div className="pb-2">
+                                    <button type="button" className="btn btn-primary mr-2" data-dismiss="modal">test</button>
+                                </div>
                             </div>
                         </div>
                     </div>
