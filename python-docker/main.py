@@ -1,10 +1,10 @@
-from SortableList import SortableList
-from my_code import bubbleSort
+from TrackedList import TrackedList
+from user_code import sort
 
-arr = SortableList([64, 34, 25, 12, 22, 11, 90])
-bubbleSort(arr)
+arr = TrackedList([64, 34, 25, 12, 22, 11, 90])
+sort(arr)
 
-for i in range(len(arr.data)):
-    print("% d," % arr.data[i])
+for i in range(len(arr)):
+    print("% d," % arr[i])
 
 print(arr.swaps)

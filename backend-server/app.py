@@ -62,11 +62,11 @@ def execute():
 
     _execute(query, (uuid, level, code))
 
-    f = open("tmp/%s.py" % uuid, "w")
+    f = open("tmp/code_%s.py" % uuid, "w")
     f.write(code)
     f.close()
 
-    stream = subprocess.run("docker run -v $PWD/tmp/%s.py:/app/my_code.py --rm python-docker" % uuid, capture_output=True, shell=True)
+    stream = subprocess.run("docker run -v $PWD/tmp/code_%s.py:/app/user_code.py --rm python-docker" % (uuid), capture_output=True, shell=True)
 
     return make_response({
         'returncode': stream.returncode,

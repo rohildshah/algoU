@@ -36,9 +36,9 @@ class ControlPanel extends React.Component {
                                         this.props.onLevelChange(event.target.value)
                                     }}>Sorting #4</button>
                                 </div>
-                                <div className="pb-2">
+                                {/* <div className="pb-2">
                                     <button type="button" className="btn btn-primary mr-2" data-dismiss="modal">test</button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

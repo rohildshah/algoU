@@ -23,7 +23,7 @@ class App extends React.Component {
     }
 
     postToCode() {
-        fetch('http://192.168.1.72:5000/code', {
+        fetch('http://192.168.1.88:5000/code', {
             method: 'POST',
             body: JSON.stringify({
                 uuid: localStorage.getItem('uuid'),
@@ -37,7 +37,7 @@ class App extends React.Component {
     }
 
     postToProgress(level) {
-        fetch('http://192.168.1.72:5000/progress', {
+        fetch('http://192.168.1.88:5000/progress', {
             method: 'POST',
             body: JSON.stringify({
                 uuid: localStorage.getItem('uuid'),
@@ -50,7 +50,7 @@ class App extends React.Component {
     }
 
     executeCode() {
-        fetch('http://192.168.1.72:5000/execute', {
+        fetch('http://192.168.1.88:5000/execute', {
             method: 'POST',
             body: JSON.stringify({
                 uuid: localStorage.getItem('uuid'),
@@ -97,7 +97,7 @@ class App extends React.Component {
 
         this.postToProgress(level)
 
-        fetch('http://192.168.1.72:5000/code?uuid='+localStorage.getItem('uuid')+'&level='+level, {
+        fetch('http://192.168.1.88:5000/code?uuid='+localStorage.getItem('uuid')+'&level='+level, {
             method: 'GET',
         })
         .then(response => response.json())
@@ -115,7 +115,7 @@ class App extends React.Component {
 
             this.onLevelChange(1)
         } else {
-            fetch('http://192.168.1.72:5000/progress?uuid=' + localStorage.getItem('uuid'), {
+            fetch('http://192.168.1.88:5000/progress?uuid=' + localStorage.getItem('uuid'), {
                 method: 'GET',
             })
             .then(response => response.json())
@@ -146,7 +146,7 @@ class App extends React.Component {
                             onChange={this.onCodeChange}
                             value={this.state.code}
                             className="w-100"
-                            style={{height: '68%'}} />
+                            style={{height: '64.5%'}} />
                         
                         <ErrorBox 
                             stdout={this.state.stdout} />

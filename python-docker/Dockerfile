@@ -6,5 +6,4 @@ WORKDIR /app
 
 COPY . .
 
-# ENTRYPOINT ["python3"]
 CMD ["python3", "main.py"]
