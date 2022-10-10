@@ -28,3 +28,7 @@ Makes use of React, NodeJS, Docker, Flask, PostgreSQL, Apache, Python, Bootstrap
 
 ### Sorted List
 ![Level Select](/assets/Sorted%20List.png)
+
+## Credit
+
+I worked on this project with an organization called [Polygence](https://polygence.com/), who put me in contact with an industry expert, Chris Rogers. The project exists thanks to Polygence and Chris' continuous support.
